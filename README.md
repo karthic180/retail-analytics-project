@@ -1,4 +1,3 @@
-
 # 📊 Retail Sales Analytics & Forecasting Platform
 
 An end-to-end Business Intelligence project simulating a real-world retail analytics environment using dimensional modeling, DAX, and Power BI.
@@ -7,7 +6,7 @@ An end-to-end Business Intelligence project simulating a real-world retail analy
 
 ## 🚀 Executive Summary
 
-This project demonstrates the design and implementation of a modern BI solution for a retail company. 
+This project demonstrates the design and implementation of a modern BI solution for a retail company.
 
 The objective was to:
 
@@ -17,93 +16,49 @@ The objective was to:
 - Apply time intelligence calculations
 - Forecast future revenue trends
 
-The solution includes synthetic data engineering, dimensional modeling, and executive-level dashboard design.
-
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Data Model
 
-### 🔹 Data Generation Layer
-Synthetic retail data generated using Python.
+The solution uses a **Star Schema** design:
 
-### 🔹 Data Modeling Layer
-Star schema design:
+### Fact Table
+- fact_sales
 
-**Fact Table**
-- `fact_sales`
+### Dimension Tables
+- dim_customer
+- dim_product
+- dim_date
 
-**Dimension Tables**
-- `dim_customer`
-- `dim_product`
-- `dim_date`
-
-**Grain:**  
-One row per product per transaction per day.
+**Grain:** One row per product per transaction per day.
 
 ---
 
 ## 📊 Dashboard Pages
 
 ### 1️⃣ Executive Overview
-- Total Sales
-- Total Profit
-- Profit Margin %
-- YoY Growth
-- Sales Trend with Forecast
+
+<img src="https://raw.githubusercontent.com/karthic180/retail-analytics-project/main/screenshots/page%201.jpg" width="800">
+
+---
 
 ### 2️⃣ Product Insights
-- Top 10 Products by Revenue
-- Product Performance Table
-- Margin Conditional Formatting
-- Contribution % Analysis
+
+<img src="https://raw.githubusercontent.com/karthic180/retail-analytics-project/main/screenshots/page%202.jpg" width="800">
+
+---
 
 ### 3️⃣ Customer Analytics
-- Sales by Segment
-- Regional Performance
-- Customer Count
-- Average Order Value
+
+<img src="https://raw.githubusercontent.com/karthic180/retail-analytics-project/main/screenshots/page%203.jpg" width="800">
 
 ---
 
-## 📈 Key DAX Measures
+## 📄 Full Power BI Report (PDF)
 
-- Total Sales
-- Total Profit
-- Profit Margin %
-- Year-over-Year Growth
-- Cumulative Sales
-- Product % of Total
-- Average Order Value
+You can download the full exported Power BI report here:
 
----
-
-## 🔮 Forecasting
-
-Power BI’s built-in time-series forecasting was applied to sales trend data to project future performance.
-
----
-
-## 📷 Dashboard Preview
-
-### Executive Overview
-![Executive Dashboard](screenshots/executive.png)
-
-### Product Insights
-![Product Insights](screenshots/product.png)
-
-### Customer Analytics
-![Customer Analytics](screenshots/customer.png)
-
-### Star Schema Model
-![Star Schema](screenshots/model.png)
-
----
-
-## 📄 Full Power BI Report
-
-Download the complete exported report:
-
-👉 [Download Full Report (PDF)](reports/Retail-Analytics-Report.pdf)
+👉 [Download Report](https://github.com/karthic180/retail-analytics-project/blob/main/reports/retail-analytics-project.pdf)
 
 ---
 
@@ -127,19 +82,16 @@ Run:
 python python/generate_data.py
 
 
-This generates fresh retail data for analysis.
-
 ---
 
 ## 🛠️ Skills Demonstrated
 
-- Dimensional Data Modeling (Star Schema)
-- Data Warehousing Concepts
+- Star Schema & Dimensional Modeling
 - Advanced DAX & Time Intelligence
-- Top N Filtering & Conditional Formatting
-- Executive Dashboard Design
-- Forecasting & Trend Analysis
-- Synthetic Data Engineering
+- Forecasting in Power BI
+- Top N Analysis
+- Data-Driven Decision Making
+- Python Data Generation
 - Git Version Control
 
 ---
