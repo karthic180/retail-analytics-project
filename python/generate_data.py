@@ -1,88 +1,83 @@
 import pandas as pd
 import numpy as np
 from faker import Faker
-import random
+from datetime import datetime, timedelta
 
 fake = Faker()
 np.random.seed(42)
 
-# Generate Customers
-customers = []
-for i in range(1000):
-    customers.append({
-        "customer_key": i+1,
-        "customer_id": f"C{i+1000}",
-        "first_name": fake.first_name(),
-        "last_name": fake.last_name(),
-        "segment": random.choice(["Consumer","Corporate","Home Office"]),
-        "city": fake.city(),
-        "state": fake.state_abbr(),
-        "signup_date": fake.date_between(start_date='-3y', end_date='today')
-    })
+# Date dimension
+start_date = datetime(2022, 1, 1)
+dates = [start_date + timedelta(days=i) for i in range(730)]
 
-dim_customer = pd.DataFrame(customers)
-
-# Generate Products
-categories = {
-    "Furniture": ["Chairs","Tables"],
-    "Technology": ["Phones","Computers"],
-    "Office Supplies": ["Paper","Binders"]
-}
-
-products = []
-pk = 1
-for cat, subs in categories.items():
-    for sub in subs:
-        for i in range(5):
-            products.append({
-                "product_key": pk,
-                "product_id": f"P{pk+100}",
-                "product_name": f"{sub} Item {i+1}",
-                "category": cat,
-                "subcategory": sub,
-                "unit_price": random.randint(20,1500)
-            })
-            pk += 1
-
-dim_product = pd.DataFrame(products)
-
-# Generate Dates
-dates = pd.date_range("2022-01-01","2025-12-31")
 dim_date = pd.DataFrame({
-    "full_date": dates
+    "date": dates,
+    "year": [d.year for d in dates],
+    "month": [d.month for d in dates],
+    "month_name": [d.strftime("%B") for d in dates],
+    "quarter": [(d.month - 1) // 3 + 1 for d in dates]
 })
-dim_date["date_key"] = dim_date["full_date"].dt.strftime("%Y%m%d").astype(int)
-dim_date["year"] = dim_date["full_date"].dt.year
-dim_date["quarter"] = "Q" + dim_date["full_date"].dt.quarter.astype(str)
-dim_date["month"] = dim_date["full_date"].dt.month
-dim_date["month_name"] = dim_date["full_date"].dt.month_name()
-dim_date["day"] = dim_date["full_date"].dt.day
 
-# Generate Sales
+dim_date.to_csv("python/dim_date.csv", index=False)
+
+# Product dimension
+products = []
+categories = ["Electronics", "Clothing", "Home", "Sports"]
+
+for i in range(1, 51):
+    products.append([
+        i,
+        f"Product_{i}",
+        np.random.choice(categories),
+        round(np.random.uniform(10, 500), 2)
+    ])
+
+dim_product = pd.DataFrame(products, columns=[
+    "product_id", "product_name", "category", "cost"
+])
+
+dim_product.to_csv("python/dim_product.csv", index=False)
+
+# Customer dimension
+customers = []
+
+for i in range(1, 201):
+    customers.append([
+        i,
+        fake.name(),
+        np.random.choice(["Consumer", "Corporate", "Small Business"]),
+        fake.state()
+    ])
+
+dim_customer = pd.DataFrame(customers, columns=[
+    "customer_id", "customer_name", "segment", "state"
+])
+
+dim_customer.to_csv("python/dim_customer.csv", index=False)
+
+# Fact table
 sales = []
-for i in range(20000):
-    product = dim_product.sample(1).iloc[0]
-    quantity = random.randint(1,5)
-    discount = random.choice([0,0.05,0.1,0.15])
-    sales_amount = product.unit_price * quantity * (1-discount)
-    profit = sales_amount * random.uniform(0.1,0.3)
 
-    sales.append({
-        "sales_key": i+1,
-        "date_key": random.choice(dim_date["date_key"]),
-        "customer_key": random.choice(dim_customer["customer_key"]),
-        "product_key": product.product_key,
-        "store_key": random.randint(1,3),
-        "quantity": quantity,
-        "discount": discount,
-        "sales_amount": round(sales_amount,2),
-        "profit": round(profit,2)
-    })
+for i in range(10000):
+    product = np.random.choice(dim_product["product_id"])
+    customer = np.random.choice(dim_customer["customer_id"])
+    date = np.random.choice(dim_date["date"])
+    quantity = np.random.randint(1, 5)
+    price = float(dim_product.loc[dim_product["product_id"] == product, "cost"])
+    revenue = quantity * price * np.random.uniform(1.1, 1.5)
 
-fact_sales = pd.DataFrame(sales)
+    sales.append([
+        date,
+        product,
+        customer,
+        quantity,
+        round(revenue, 2)
+    ])
 
-# Export CSVs
-dim_customer.to_csv("dim_customer.csv", index=False)
-dim_product.to_csv("dim_product.csv", index=False)
-dim_date.to_csv("dim_date.csv", index=False)
-fact_sales.to_csv("fact_sales.csv", index=False)
+fact_sales = pd.DataFrame(sales, columns=[
+    "date", "product_id", "customer_id", "quantity", "sales_amount"
+])
+
+fact_sales.to_csv("python/fact_sales.csv", index=False)
+
+print("Synthetic retail data generated successfully.")
