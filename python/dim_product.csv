@@ -1,0 +1,31 @@
+product_key,product_id,product_name,category,subcategory,unit_price
+1,P101,Chairs Item 1,Furniture,Chairs,925
+2,P102,Chairs Item 2,Furniture,Chairs,353
+3,P103,Chairs Item 3,Furniture,Chairs,910
+4,P104,Chairs Item 4,Furniture,Chairs,784
+5,P105,Chairs Item 5,Furniture,Chairs,559
+6,P106,Tables Item 1,Furniture,Tables,564
+7,P107,Tables Item 2,Furniture,Tables,746
+8,P108,Tables Item 3,Furniture,Tables,245
+9,P109,Tables Item 4,Furniture,Tables,440
+10,P110,Tables Item 5,Furniture,Tables,1223
+11,P111,Phones Item 1,Technology,Phones,1086
+12,P112,Phones Item 2,Technology,Phones,959
+13,P113,Phones Item 3,Technology,Phones,1171
+14,P114,Phones Item 4,Technology,Phones,1320
+15,P115,Phones Item 5,Technology,Phones,1132
+16,P116,Computers Item 1,Technology,Computers,1493
+17,P117,Computers Item 2,Technology,Computers,823
+18,P118,Computers Item 3,Technology,Computers,437
+19,P119,Computers Item 4,Technology,Computers,1491
+20,P120,Computers Item 5,Technology,Computers,939
+21,P121,Paper Item 1,Office Supplies,Paper,559
+22,P122,Paper Item 2,Office Supplies,Paper,564
+23,P123,Paper Item 3,Office Supplies,Paper,1107
+24,P124,Paper Item 4,Office Supplies,Paper,852
+25,P125,Paper Item 5,Office Supplies,Paper,23
+26,P126,Binders Item 1,Office Supplies,Binders,275
+27,P127,Binders Item 2,Office Supplies,Binders,254
+28,P128,Binders Item 3,Office Supplies,Binders,886
+29,P129,Binders Item 4,Office Supplies,Binders,852
+30,P130,Binders Item 5,Office Supplies,Binders,37
